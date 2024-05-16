@@ -5,22 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b1284d6-9f66-45fc-8172-cc302a801490" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatClickHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ImageMessageControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/TextMessageControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/VoiceMessageControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/TELEKG_background.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/BaseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/BaseMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/Chat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/ImageMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/ImageMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/TextMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/TextMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/VoiceMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/VoiceMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/TextMessageControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/TextMessageControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/BaseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/BaseMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/TextMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/TextMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +95,7 @@
       <workItem from="1715639099041" duration="1545000" />
       <workItem from="1715681582446" duration="1859000" />
       <workItem from="1715785188534" duration="674000" />
-      <workItem from="1715786376323" duration="34956000" />
+      <workItem from="1715786376323" duration="50078000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -114,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714471429806</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1715848223584</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715848223584</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

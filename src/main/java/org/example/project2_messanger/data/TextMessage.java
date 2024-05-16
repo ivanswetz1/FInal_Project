@@ -13,4 +13,5 @@ public class TextMessage extends BaseMessage {
     public void setText(String text) {
         this.text = text;
     }
+
 }

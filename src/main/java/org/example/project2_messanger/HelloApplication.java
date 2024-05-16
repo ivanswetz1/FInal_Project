@@ -28,6 +28,10 @@ public class HelloApplication extends Application {
     private final ArrayList<Chat> chats = new ArrayList<>();
     private VBox chatList = new VBox();
     private GridPane messageList = new GridPane();
+    private ChatControl currentChatControl;
+    private BorderPane root;
+
+
 
     ChatClickHandler chatClickHandler = sender -> {
         messageList.getChildren().clear();
@@ -41,28 +45,72 @@ public class HelloApplication extends Application {
                     } else if (message instanceof VoiceMessage) {
                         messageList.getChildren().add(new VoiceMessageControl((VoiceMessage) message));
                     }
-                    chatList
-                }
+        }
         );
     };
 
+    private HBox createChatSender(ChatControl chatControl) {
+        HBox chatSender = new HBox(10);
+        TextField messageField = new TextField();
+        messageField.setStyle("-fx-background-color: #15212a; " +
+                "-fx-border-color: #4169E1; " +
+                "-fx-border-radius: 15px; " +
+                "-fx-text-fill: #FFFFFF; " +
+                "-fx-font-family: 'Arial'; " +
+                "-fx-font-size: 14px;");
+        messageField.setPromptText("Type your message here...");
+        Button sendButton = new Button("Send");
+        sendButton.setStyle("-fx-background-color: #4169E1; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-size: 20px; " +
+                "-fx-font-family: 'Arial'; "+
+                "-fx-border-radius: 5px; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 1px 2px;");
+
+        int[] currentRowIndex = {0};
+        // Configure the send button action
+        sendButton.setOnAction(event -> {
+            String messageText = messageField.getText();
+            if (!messageText.isEmpty()) {
+                TextMessage message = new TextMessage("Date", "Current User", 0, 0, messageText);
+                chatControl.getChat().AddTMessage(message); //AddTMessage adds the message to the chat
+                TextMessageControl messageControl = new TextMessageControl(message);
+                messageList.add(messageControl, 0, currentRowIndex[0]++);
+                messageField.clear();
+            }
+        });
+
+        chatSender.getChildren().addAll(messageField, sendButton);
+        return chatSender;
+    }
+    private void updateChatList() {
+        chatList.getChildren().clear();
+        for (Chat chat : chats) {
+            ChatControl chatControl = new ChatControl(chat);
+            chatControl.setChatClickHandler(chatClickHandler);
+            chatList.getChildren().add(chatControl);
+        }
+    }
 
     public static void main(String[] args) {
         launch();
-
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
         //Pane for whole application
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         root.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         URL url = getClass().getResource("/TELEKG_background.png");
         root.setStyle("-fx-background-image: url('" + url.toString() + "');");
 
 
         messageList = new GridPane();
+        messageList.setHgap(100);
+        messageList.setVgap(40);
+        messageList.setPadding(new Insets(10, 10, 10, 10));
 
         chatList = new VBox(10);
         chatList.setStyle("-fx-padding: 15; -fx-pref-width: 130;");
@@ -194,52 +242,99 @@ public class HelloApplication extends Application {
         ADD.getChildren().addAll(peopleLabelVbox, ButtonVbox);
         ADD.setStyle("-fx-padding: 50; -fx-pref-width: 190;");
 
-        //Vbox for chatList and ADD
-        VBox chatList_ADD = new VBox();
-        chatList_ADD.getChildren().addAll(ADD, chatList);
 
-        // Create a new Region
+
+
         Region leftRegion = new Region();
-        // Set the background color of the Region
-        leftRegion.setStyle("-fx-background-color: #15212a;"); // Replace #4CAF50 with the color you want
-        // Set the preferred width of the Region
-        leftRegion.setPrefWidth(230); // Adjust this value as needed
-        // Add the Region to the left side of the BorderPane
-        // Create a new StackPane
+
+        leftRegion.setStyle("-fx-background-color: #15212a;");
+        leftRegion.setPrefWidth(250);
         StackPane leftStackPane = new StackPane();
-        // Add the Region and the VBox to the StackPane
-        leftStackPane.getChildren().addAll(leftRegion, chatList_ADD);
+
 
         //DESIGN END
 
+        int[] currentRowIndex = {0};
 
-        //Hbox for chatSender
-//        chatSender = new HBox();
-//        chatSender.setSpacing(10);
-//        chatSender.setLayoutX(250);
-//        chatSender.setLayoutY(730);
-//        TextField sender = new TextField();
-//        sender.setPrefWidth(500);
-//        Button send = new Button("Send");
-//        ComboBox<String> author_select = new ComboBox<>();
-//        author_select.getItems().addAll("Me", "User");
-//        ComboBox<String> message_select = new ComboBox<>();
-//        message_select.getItems().addAll("Text", "Image", "Voice");
-//        chatSender.getChildren().addAll(author_select, sender, send, message_select);
+        chatClickHandler = sender -> {
+            messageList.getChildren().clear();
+            currentChatControl = sender;
+            HBox chatSender = createChatSender(sender);//a chat sender for the selected chat
+            chatSender.setVisible(true);
+            chatSender.setPadding(new Insets(20));
+            chatSender.setAlignment(Pos.CENTER);
+            root.setBottom(chatSender); // Set the chat sender to the bottom of the BorderPane
+            sender.getChat().GetMessages().forEach((message) -> {
+                if (message instanceof TextMessage) {
+                    messageList.getChildren().add(new TextMessageControl((TextMessage) message));
+                } else if (message instanceof ImageMessage) {
+                    messageList.getChildren().add(new ImageMessageControl((ImageMessage) message));
+                } else if (message instanceof VoiceMessage) {
+                    messageList.getChildren().add(new VoiceMessageControl((VoiceMessage) message));
+                }
+            });
+        };
+
+        // Update chat list function
 
 
+        Button deletePeople = new Button("-");
+        deletePeople.setStyle("-fx-background-color: #4169E1; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-size: 20px; " +
+                "-fx-font-family: 'Arial'; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 1px 2px;");
+        deletePeople.setOnAction(event -> {
+            if (currentChatControl != null) {
+                chats.remove(currentChatControl.getChat());
+                chatList.getChildren().remove(currentChatControl);
+                messageList.getChildren().clear();
+                currentChatControl = null;
+            }
+        });
+
+        // Button for editing chats
+        Button editPeople = new Button("Edit");
+        editPeople.setStyle("-fx-background-color: #4169E1; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-size: 20px; " +
+                "-fx-font-family: 'Arial'; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-padding: 1px 2px;");
+        editPeople.setOnAction(event -> {
+            if (currentChatControl != null) {
+                Chat chat = currentChatControl.getChat();
+                username.setText(chat.getName());
+                phonefield.setText(chat.getPhone());
+                infoBox.setVisible(true);
+                save.setOnAction(saveEvent -> {
+                    chat.setName(username.getText());
+                    chat.setPhone(phonefield.getText());
+                    updateChatList(); // This method will refresh the chat list display
+                    infoBox.setVisible(false);
+                    username.clear();
+                    phonefield.clear();
+                });
+            }
+        });
+        //Vbox for Edit and Delete and ADD and ChatList
+
+        VBox chatList_ADD = new VBox();
+        chatList_ADD.getChildren().addAll(ADD, editPeople, deletePeople, chatList);
 
 
-        //Adding messages to visible chat
+        leftStackPane.getChildren().addAll(leftRegion, chatList_ADD);
+
 
         root.setLeft(leftStackPane);
         root.setCenter(centerPane);
-        root.setBottom(chatSender);
         Scene scene = new Scene(root, 1000, 800);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Application");
         primaryStage.show();
-
     }
 
 }

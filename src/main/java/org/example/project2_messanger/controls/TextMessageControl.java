@@ -15,4 +15,5 @@ public class TextMessageControl extends VBox {
                 "-fx-border-radius: 20; ");
         getChildren().add(new Label(textMessage.getText()));
     }
+
 }

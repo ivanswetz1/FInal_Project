@@ -3,14 +3,14 @@ package org.example.project2_messanger.data;
 abstract public class BaseMessage {
     private String date;
     private String author;
-    public int x;
-    public int y;
+    private int[] currentRowIndex = {0};
+    private int[] currentColumnIndex = {0};
 
     public BaseMessage(String date, String author, int x, int y) {
         this.date = date;
         this.author = author;
-        this.x = x;
-        this.y = y;
+        currentRowIndex[0] = x;
+        currentColumnIndex[0] = y;
     }
     public String getDate() {
         return date;

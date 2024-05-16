@@ -15,7 +15,6 @@ import org.example.project2_messanger.data.Chat;
 public class ChatControl extends VBox {
     private Chat chat;
     private ChatClickHandler chatClickHandler;
-    public HBox chatSender;
 
     public ChatControl(Chat chat) {
         super();
@@ -30,22 +29,6 @@ public class ChatControl extends VBox {
                 chatClickHandler.onClick(this);
             }
         });
-
-    }
-    public HBox getChatSender() {
-        chatSender = new HBox();
-        chatSender.setSpacing(10);
-        chatSender.setLayoutX(250);
-        chatSender.setLayoutY(730);
-        TextField sender = new TextField();
-        sender.setPrefWidth(500);
-        Button send = new Button("Send");
-        ComboBox<String> author_select = new ComboBox<>();
-        author_select.getItems().addAll("Me", "User");
-        ComboBox<String> message_select = new ComboBox<>();
-        message_select.getItems().addAll("Text", "Image", "Voice");
-        chatSender.getChildren().addAll(author_select, sender, send, message_select);
-        return chatSender;
     }
     public Chat getChat() {
         return chat;
@@ -53,4 +36,6 @@ public class ChatControl extends VBox {
     public void setChatClickHandler(ChatClickHandler chatClickHandler) {
         this.chatClickHandler = chatClickHandler;
     }
+
+
 }
