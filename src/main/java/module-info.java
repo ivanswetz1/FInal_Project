@@ -5,4 +5,6 @@ module org.example.project2_messanger {
 
     opens org.example.project2_messanger to javafx.fxml;
     exports org.example.project2_messanger;
+    exports org.example.project2_messanger.data;
+    opens org.example.project2_messanger.data to javafx.fxml;
 }

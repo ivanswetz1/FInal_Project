@@ -1,8 +1,8 @@
-package org.example.project2_messanger;
+package org.example.project2_messanger.data;
 
 import java.util.ArrayList;
 
-public class Chat extends User{
+public class Chat extends User {
     ArrayList<BaseMessage> messages = new ArrayList<BaseMessage>();
 
     public Chat(String name, String phone) {
@@ -16,5 +16,8 @@ public class Chat extends User{
     }
     public void AddVMessage(VoiceMessage message){
         messages.add(message);
+    }
+    public ArrayList<BaseMessage> GetMessages(){
+        return messages;
     }
 }

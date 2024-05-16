@@ -1,8 +1,8 @@
-package org.example.project2_messanger;
+package org.example.project2_messanger.data;
 
 public class User {
-    String name;
-    String phone;
+    private String name;
+    private String phone;
 
     public User(String name, String phone) {
         this.name = name;

@@ -1,28 +1,52 @@
 package org.example.project2_messanger;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.project2_messanger.controls.*;
+import org.example.project2_messanger.data.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class HelloApplication extends Application {
-    private Pane root;
+
+    private final ArrayList<Chat> chats = new ArrayList<>();
+    private VBox chatList = new VBox();
+    private GridPane messageList = new GridPane();
+
+    ChatClickHandler chatClickHandler = sender -> {
+        messageList.getChildren().clear();
+        // click handler for chat
+        sender.getChat().GetMessages().forEach((message) -> {
+                    // update message list
+                    if (message instanceof TextMessage) {
+                        messageList.getChildren().add(new TextMessageControl((TextMessage) message));
+                    } else if (message instanceof ImageMessage) {
+                        messageList.getChildren().add(new ImageMessageControl((ImageMessage) message));
+                    } else if (message instanceof VoiceMessage) {
+                        messageList.getChildren().add(new VoiceMessageControl((VoiceMessage) message));
+                    }
+                    chatList
+                }
+        );
+    };
+
+
     public static void main(String[] args) {
         launch();
 
@@ -32,237 +56,191 @@ public class HelloApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         //Pane for whole application
-        root = new Pane();
-        root.setPrefSize(1000, 800);
-        root.setPadding(new Insets(10, 10, 10, 10));
+        BorderPane root = new BorderPane();
         root.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        URL url = getClass().getResource("/TELEKG_background.png");
+        root.setStyle("-fx-background-image: url('" + url.toString() + "');");
+
+
+        messageList = new GridPane();
+
+        chatList = new VBox(10);
+        chatList.setStyle("-fx-padding: 15; -fx-pref-width: 130;");
+        chatList.setAlignment(Pos.TOP_CENTER);
+
+        chats.forEach(chat -> {
+            ChatControl chatControl = new ChatControl(chat);
+            chatControl.setChatClickHandler(chatClickHandler);
+            chatList.getChildren().add(chatControl);
+        });
+
+
+
+
+        //Vbox for info entering
+        VBox infoBox = new VBox();
+        Label info = new Label("Add Information");
+        info.setFont(Font.font("Times New Roman", 30));
+        info.setTextFill(Color.WHITE);
+        Label name = new Label("Name");
+        name.setFont(Font.font("Times New Roman", 15));
+        name.setTextFill(Color.WHITE);
+        Label phone = new Label("Phone number");
+        phone.setFont(Font.font("Times New Roman", 15));
+        phone.setTextFill(Color.WHITE);
+        infoBox.setSpacing(5);
+        TextField username = new TextField();
+        TextField phonefield = new TextField();
+        username.setMaxWidth(300);
+        username.setStyle("-fx-background-color: #15212a; " + // Background color
+                "-fx-border-color: #4169E1; " + // Border color
+                "-fx-border-radius: 15px; " + // Border radius
+                "-fx-text-fill: #FFFFFF; " + // Text color
+                "-fx-font-family: 'Arial'; " + // Font
+                "-fx-font-size: 14px;");
+        phonefield.setStyle("-fx-background-color: #15212a; " + // Background color
+                "-fx-border-color: #4169E1; " + // Border color
+                "-fx-border-radius: 10px; " + // Border radius
+                "-fx-text-fill: #FFFFFF; " + // Text color
+                "-fx-font-family: 'Arial'; " + // Font
+                "-fx-font-size: 14px;");
+        phonefield.setMaxWidth(300);
+        Button save = new Button("Save");
+        save.setStyle("-fx-background-color: #4169E1; " + // Background color
+                "-fx-text-fill: white; " + // Text color
+                "-fx-font-size: 20px; " + //Font size
+                "-fx-font-family: 'Arial'; "+
+                "-fx-border-radius: 10px; " + // Border radius
+                "-fx-background-radius: 10px; " + // Background radius
+                "-fx-padding: 1px 2px;");
+        infoBox.getChildren().addAll(info, name, username, phone, phonefield, save);
+        infoBox.setVisible(false);
+        infoBox.setAlignment(Pos.CENTER);
+
+
+        //ScrollPane for messageList
+        ScrollPane scrollPane = new ScrollPane(messageList);
+
+
+        scrollPane.setStyle("-fx-background: transparent; " + // Makes the ScrollPane's background transparent
+                "-fx-background-color: transparent; ");
+
+        Platform.runLater(() -> {
+            scrollPane.lookup(".viewport").setStyle("-fx-background-color: transparent;");
+        });
+
+        scrollPane.setFitToWidth(true);  // Ensures the scroll pane width fits the content
+        scrollPane.setFitToHeight(true);
+
+
+        //StackPane for INFOBOX and MESSAGE LIST
+        StackPane centerPane = new StackPane();
+        centerPane.getChildren().add(scrollPane);
+        centerPane.getChildren().add(infoBox);
+        centerPane.setStyle("-fx-background-image: url('" + url.toString() + "');");
+
+
 
         //Button for adding people
-        Label people = new Label("Add People");
-        people.setFont(Font.font("Times New Roman", 15));
         Button addPeople = new Button("+");
-        addPeople.setMaxWidth(100);
+        addPeople.setStyle("-fx-background-color: #4169E1; " + // Background color
+                "-fx-text-fill: white; " + // Text color
+                "-fx-font-size: 20px; " + //Font size
+                "-fx-font-family: 'Arial'; "+
+                "-fx-border-radius: 5px; " + // Border radius
+                "-fx-background-radius: 5px; " + // Background radius
+                "-fx-padding: 1px 2px;");
 
-
-        //Vbox for Button
-        VBox ADD = new VBox();
-        ADD.getChildren().addAll(people, addPeople);
-
-        //Adding dividing line
-        Polyline line = new Polyline(200, 0, 200, 1000);
-        line.setStroke(Color.LIGHTGOLDENRODYELLOW);
-        line.setStrokeWidth(5);
-        line.setStrokeLineCap(StrokeLineCap.ROUND);
-        line.setStrokeLineJoin(StrokeLineJoin.MITER);
-        line.setStrokeDashOffset(10);
-
-        //Adding rectangles
-        Rectangle rectangle1 = new Rectangle(0,0,200,1000);
-        rectangle1.setFill(Color.LIGHTSKYBLUE);
-
-        Rectangle rectangle2 = new Rectangle(200,0,800,1000);
-        rectangle2.setFill(Color.LIGHTBLUE);
-
-        //Adding Vbox for people
-        VBox peopleVbox = new VBox();
-        peopleVbox.setAlignment(Pos.TOP_LEFT);
-        peopleVbox.setLayoutX(60);
-        peopleVbox.setLayoutY(50);
-        peopleVbox.setSpacing(40);
-
-
-        //GridPane for messanger
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(-150);
-        // Setting horizontal gap between cells
-        gridPane.setVgap(20);
-        // Setting vertical gap between cells
-        gridPane.setLayoutX(0);
-        // Setting the layout X coordinate
-        gridPane.setLayoutY(0);
-        // Setting the layout Y coordinate
-
-        for (int i = 0; i < 2; i++) {
-            ColumnConstraints column = new ColumnConstraints(400);
-            gridPane.getColumnConstraints().add(column);
-        }
-
-
-        // Create a ScrollPane
-        ScrollPane scrollPane = new ScrollPane();
-        // Set the ScrollPane layout properties
-        scrollPane.setLayoutX(250);
-        scrollPane.setLayoutY(50);
-        scrollPane.setPrefSize(700, 680);
-
-        // Set the GridPane as the content of the ScrollPane
-        scrollPane.setContent(gridPane);
-
-
-
-        //Setting Hbox for chat sender
-        HBox chatSender = new HBox();
-        chatSender.setSpacing(10);
-        chatSender.setLayoutX(250);
-        chatSender.setLayoutY(730);
-        TextField sender = new TextField();
-        sender.setPrefWidth(500);
-        Button send = new Button("Send");
-        ComboBox<String> author_select = new ComboBox<>();
-        author_select.getItems().addAll("Me", "User");
-        ComboBox<String> message_select = new ComboBox<>();
-        message_select.getItems().addAll("Text", "Image", "Voice");
-        chatSender.getChildren().addAll(author_select, sender, send, message_select);
-
-
-
-        //Setting AddUser Button
-        ArrayList<User> users = new ArrayList<>();
-        addPeople.setOnAction(actionEvent -> {
-            root.getChildren().remove(chatSender);
-            VBox infoBox = new VBox();
-            Label info = new Label("Add Information");
-            info.setFont(Font.font("Times New Roman", 30));
-            Label name = new Label("Name");
-            name.setFont(Font.font("Times New Roman", 15));
-            Label phone = new Label("Phone number");
-            phone.setFont(Font.font("Times New Roman", 15));
-            infoBox.setSpacing(5);
-            TextField username = new TextField();
-            TextField phonefield = new TextField("+380");
-            Button save = new Button("Save");
-            infoBox.setLayoutX(500);
-            infoBox.setLayoutY(300);
-            infoBox.getChildren().addAll(info,name, username, phone, phonefield, save);
-            root.getChildren().add(infoBox);
-            save.setOnAction(actionEvent1 -> {
-                User user = new Chat(username.getText(), phonefield.getText());
-                users.add(user);
-                infoBox.setVisible(false);
-                Label userLabel = new Label(user.getName());
-                userLabel.setFont(Font.font("Times New Roman", 20));
-                peopleVbox.getChildren().add(userLabel);
-                for (Node node : peopleVbox.getChildren()) {
-                    node.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            final int[] currentRow = {0};
-                            if(root.getChildren().contains(chatSender)){
-                                root.getChildren().remove(chatSender);
-                            }
-                            boolean checker = false;
-                            for (User user : users) {
-                                if (user.getName().equals(((Label) node).getText())) {
-                                    root.getChildren().add(chatSender);
-                                    checker = true;
-                                    break;
-                                }
-                            }
-                            if(!checker){
-                                root.getChildren().remove(chatSender);
-                            }
-
-                            //Setting up Chat
-
-                            send.setOnAction(actionEvent -> {
-                                //Setting actions for chat sender
-                                HBox Message = new HBox();
-                                HBox Message1 = new HBox();
-                                VBox DateAuthor = new VBox();
-                                Label date = new Label("20.04.2024");
-                                date.setFont(Font.font("Times New Roman", 8));
-                                date.setTextFill(Color.GRAY);
-                                Label author = new Label();
-                                author.setFont(Font.font("Times New Roman", 8));
-                                author.setTextFill(Color.GRAY);
-                                Label text = new Label();
-                                text.setFont(Font.font("Times New Roman", 20));
-                                DateAuthor.getChildren().addAll(date, author);
-                                Message1.getChildren().addAll(DateAuthor, text);
-
-
-                                switch (author_select.getValue()){
-                                    case "Me":
-                                        switch (message_select.getValue()){
-                                            case "Text":
-                                                TextMessage message = new TextMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("Me");
-                                                gridPane.add(Message1, 2, currentRow[0]);
-                                                break;
-                                            case "Image":
-                                                ImageMessage message1 = new ImageMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("Me");
-                                                gridPane.add(Message, 2, currentRow[0]);
-                                                break;
-                                            case "Voice":
-                                                VoiceMessage message2 = new VoiceMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("Me");
-                                                gridPane.add(Message, 2, currentRow[0]);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        break;
-                                    case "User":
-                                        switch (message_select.getValue()){
-                                            case "Text":
-                                                TextMessage message = new TextMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("User");
-                                                gridPane.add(Message1, 0, currentRow[0]);
-                                                break;
-                                            case "Image":
-                                                ImageMessage message1 = new ImageMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("User");
-                                                gridPane.add(Message1, 0, currentRow[0]);
-                                                break;
-                                            case "Voice":
-                                                VoiceMessage message2 = new VoiceMessage("20.04.2024", message_select.getValue(), sender.getText());
-                                                text.setText(sender.getText());
-                                                author.setText("User");
-                                                gridPane.add(Message1, 0, currentRow[0]);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                currentRow[0]++;
-                            });
+        addPeople.setOnAction(event -> {
+                    infoBox.setVisible(true);
+                    save.setOnAction(actionEvent1 -> {
+                        if (username.getText().isEmpty() || phonefield.getText().isEmpty()) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error Dialog");
+                            alert.setHeaderText("Input Error");
+                            alert.setContentText("Please enter both username and phone number!");
+                            alert.showAndWait();
+                        } else {
+                            Chat newChat = new Chat(username.getText(), phonefield.getText());
+                            chats.add(newChat);
+                            ChatControl newChatControl = new ChatControl(newChat);
+                            newChatControl.setChatClickHandler(chatClickHandler);
+                            chatList.getChildren().add(newChatControl);
+                            infoBox.setVisible(false);
+                            username.clear();
+                            phonefield.clear();
                         }
                     });
                 }
-            });
-        });
+        );
+        addPeople.setMaxWidth(100);
 
-        peopleVbox.getChildren().add(ADD);
+        //DESIGN
+
+        //Label for adding people
+        Label people = new Label("Add People");
+        people.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+        people.setTextFill(Color.WHITE);
+        VBox peopleLabelVbox = new VBox();
+        peopleLabelVbox.setAlignment(Pos.CENTER);
+        peopleLabelVbox.getChildren().add(people);
+
+        VBox ButtonVbox = new VBox();
+        ButtonVbox.setAlignment(Pos.CENTER);
+        ButtonVbox.getChildren().add(addPeople);
+
+        //Vbox for Button
+        VBox ADD = new VBox();
+        ADD.getChildren().addAll(peopleLabelVbox, ButtonVbox);
+        ADD.setStyle("-fx-padding: 50; -fx-pref-width: 190;");
+
+        //Vbox for chatList and ADD
+        VBox chatList_ADD = new VBox();
+        chatList_ADD.getChildren().addAll(ADD, chatList);
+
+        // Create a new Region
+        Region leftRegion = new Region();
+        // Set the background color of the Region
+        leftRegion.setStyle("-fx-background-color: #15212a;"); // Replace #4CAF50 with the color you want
+        // Set the preferred width of the Region
+        leftRegion.setPrefWidth(230); // Adjust this value as needed
+        // Add the Region to the left side of the BorderPane
+        // Create a new StackPane
+        StackPane leftStackPane = new StackPane();
+        // Add the Region and the VBox to the StackPane
+        leftStackPane.getChildren().addAll(leftRegion, chatList_ADD);
+
+        //DESIGN END
+
+
+        //Hbox for chatSender
+//        chatSender = new HBox();
+//        chatSender.setSpacing(10);
+//        chatSender.setLayoutX(250);
+//        chatSender.setLayoutY(730);
+//        TextField sender = new TextField();
+//        sender.setPrefWidth(500);
+//        Button send = new Button("Send");
+//        ComboBox<String> author_select = new ComboBox<>();
+//        author_select.getItems().addAll("Me", "User");
+//        ComboBox<String> message_select = new ComboBox<>();
+//        message_select.getItems().addAll("Text", "Image", "Voice");
+//        chatSender.getChildren().addAll(author_select, sender, send, message_select);
+
 
 
 
         //Adding messages to visible chat
 
-
-
-
-        root.getChildren().addAll(rectangle1, rectangle2, line, peopleVbox, scrollPane);
-
+        root.setLeft(leftStackPane);
+        root.setCenter(centerPane);
+        root.setBottom(chatSender);
         Scene scene = new Scene(root, 1000, 800);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Application");
         primaryStage.show();
-    }
-    void chooseUser(){
-       //oot.getChildren()
-    }
 
-    //Function for node click
-
+    }
 
 }
 

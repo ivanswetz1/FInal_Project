@@ -4,27 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b1284d6-9f66-45fc-8172-cc302a801490" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/BaseMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/Chat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/ImageMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/TextMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/VoiceMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/project2_messanger/hello-view.fxml" afterDir="false" />
+    <list default="true" id="8b1284d6-9f66-45fc-8172-cc302a801490" name="Changes" comment="First commit">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatClickHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ChatControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/ImageMessageControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/TextMessageControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/controls/VoiceMessageControl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/TELEKG_background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/BaseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/BaseMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/Chat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/Chat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/ImageMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/ImageMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/TextMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/TextMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/VoiceMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/project2_messanger/data/VoiceMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +30,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -74,11 +71,16 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\train trash\Project2_Messanger\src\main\resources" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -96,10 +98,30 @@
       <workItem from="1713867811742" duration="6889000" />
       <workItem from="1714036902274" duration="16000" />
       <workItem from="1714375033584" duration="1053000" />
+      <workItem from="1714471370994" duration="324000" />
+      <workItem from="1714475773864" duration="237000" />
+      <workItem from="1714476860755" duration="1487000" />
+      <workItem from="1715639099041" duration="1545000" />
+      <workItem from="1715681582446" duration="1859000" />
+      <workItem from="1715785188534" duration="674000" />
+      <workItem from="1715786376323" duration="34956000" />
     </task>
+    <task id="LOCAL-00001" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1714471429806</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714471429806</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
   </component>
 </project>
